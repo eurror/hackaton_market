@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'hackaton',
         'USER': 'evr',
         'PASSWORD': '1',
-        'HOST': 'local',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
 
