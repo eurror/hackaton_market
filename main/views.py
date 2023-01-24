@@ -16,7 +16,7 @@ class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-class ProductListView(generics.ListAPIView):
+class ProductViewSet(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class= ProductSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -62,7 +62,7 @@ class ProductListView(generics.ListAPIView):
 
         return super().get_permissions()
 
-class ReviewView(ModelViewSet):
+class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
