@@ -13,9 +13,24 @@ class CategorySerializer(serializers.ModelSerializer):
         return title
 
 class ProductSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.name')
+
     class Meta:
         model = Product
-        fields = ('title', 'category', 'price', 'available', 'created', 'updated')
+        fields = '__all__'
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        user = request.user
+        product = Product.objects.create(user=user, **validated_data)
+        return product
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['reviews'] = ReviewSerializer(
+            Review.objects.filter(post=instance.pk), many=True).data
+        return representation
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.name')
@@ -30,4 +45,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = '__all__'
 
-
+class ProductListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['title', 'category', 'created_at']
