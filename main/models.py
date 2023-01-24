@@ -74,7 +74,7 @@ class Like(models.Model):
     is_liked = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.product} is like by {self.user}'
+        return f'{self.product} is liked by {self.user}'
 
 
 class Review(models.Model):
