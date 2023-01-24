@@ -1,5 +1,7 @@
 from django.db import models
 
+from account.models import User
+
 class Category(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
@@ -65,3 +67,27 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='likes')
+    is_liked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.product} is like by {self.user}'
+
+
+class Review(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    text = models.TextField()
+
+    def __str__(self):
+        if len(self.text) > 50:
+            return f'{self.text[:50]}...'
+        return self.text
+
+    class Meta:
+        ordering = ['-created']

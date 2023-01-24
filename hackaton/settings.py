@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-qlvh_ken3x_q$#fa+6#n&e_^e@%&6(-m**2_(7ye6v=^$xeome
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+AUTH_USER_MODEL = 'account.User'
 ALLOWED_HOSTS = []
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     #my apps
     'main',
+    'account',
 ]
 
 MIDDLEWARE = [
