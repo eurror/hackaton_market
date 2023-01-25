@@ -1,5 +1,7 @@
 from django.db import models
 
+from PIL import Image
+
 from account.models import User
 
 class Category(models.Model):
@@ -28,6 +30,12 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+       instance = super(Product, self).save(*args, **kwargs)
+       image = Image.open(instance.image.path)
+       image.save(instance.image.path, quality=20, optimize=True)
+       return instance
 
     class Meta:
         ordering = ['title',]
