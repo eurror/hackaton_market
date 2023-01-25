@@ -28,17 +28,17 @@ class ProductSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['reviews'] = ReviewSerializer(
-            Review.objects.filter(post=instance.pk), many=True).data
+            Review.objects.filter(product=instance.pk), many=True).data
         return representation
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author.name')
+    author = serializers.ReadOnlyField(source='user.name')
 
     def create(self, validated_data):
         request = self.context.get('request')
         user = request.user
-        comment = Review.objects.create(author=user, **validated_data)
+        comment = Review.objects.create(user=user, **validated_data)
         return comment
 
     class Meta:
