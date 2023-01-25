@@ -8,7 +8,7 @@ from rest_framework import filters
 import django_filters
 
 from .models import Category, Product, Order, OrderItem, Review, Like
-from .serializers import ProductSerializer, CategorySerializer, ReviewSerializer
+from .serializers import ProductSerializer, CategorySerializer, ReviewSerializer, FavouritesSerializer
 from .permission import IsAdminAuthPermission, IsAuthorPermission
 
 
@@ -75,3 +75,16 @@ class ReviewViewSet(ModelViewSet):
             self.permission_classes = [IsAuthorPermission]
 
         return super().get_permissions()
+
+
+class FavouritesViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = FavouritesSerializer
+
+    @action(['GET'], detail=True)
+    def favourites(self, request):
+        if request.user.is_authenticated():
+            product = Product.likes.filter(is_liked=True, email=request.user)
+            serializer = FavouritesSerializer(product, many=True)
+            return Response(serializer.data)
+        Response.redirect('account:login')

@@ -7,6 +7,7 @@ from . import views
 router = DefaultRouter()
 router.register('products', views.ProductViewSet)
 router.register('reviews', views.ReviewViewSet)
+router.register('favourites', views.FavouritesViewSet)
 
 app_name = 'main'
 urlpatterns = [

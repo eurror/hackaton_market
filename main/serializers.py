@@ -49,3 +49,8 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['title', 'category', 'created_at']
+
+class FavouritesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = 'title', 'price'
