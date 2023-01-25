@@ -8,7 +8,7 @@ class UserManager(BaseUserManager):
                 **extra_fields):
         if not email:
             raise ValueError('Поле email не '
-                'может быть пустым')
+                             'может быть пустым')
         email = self.normalize_email(email)
         user = self.model(email=email,
                           **extra_fields)
@@ -62,5 +62,5 @@ class User(AbstractBaseUser):
 
     def create_activation_code(self):
         code = get_random_string(10)
-        self.activation_code=code
+        self.activation_code = code
         self.save()

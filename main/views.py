@@ -16,10 +16,12 @@ class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
+
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
-    serializer_class= ProductSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    serializer_class = ProductSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend,
+                       filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category']
     search_fields = ['tags__slug', 'created_at']
     ordering_fields = ['created_at', 'title']
@@ -61,6 +63,7 @@ class ProductViewSet(ModelViewSet):
             self.permission_classes = [IsAuthorPermission]
 
         return super().get_permissions()
+
 
 class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()

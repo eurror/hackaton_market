@@ -37,16 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #additional
+    # additional
     'rest_framework.authtoken',
     'rest_framework',
     'django_filters',
     'drf_yasg',
-    #my apps
+    'social_django',
+    # my apps
     'main',
     'account',
     'cart',
 ]
+# it's recommended to use json format if you're using postgresql to let your users to login via google etc.
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -140,7 +143,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # my configs
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',  # 1
+        'rest_framework.authentication.SessionAuthentication',  # 2
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 3 added lines 1,2,3 to auth users via google, twitter etc.
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 2,

@@ -12,6 +12,7 @@ class CategorySerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('This category already exists')
         return title
 
+
 class ProductSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.name')
 
@@ -45,10 +46,12 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = '__all__'
 
+
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['title', 'category', 'created_at']
+
 
 class FavouritesSerializer(serializers.ModelSerializer):
     class Meta:

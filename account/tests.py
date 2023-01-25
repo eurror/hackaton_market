@@ -79,7 +79,8 @@ class UserTest(APITestCase):
             'new_password': '1234',
             'new_password_confirm': '1234',
         }
-        request = self.factory.post('forgot_password_complete/', data, format='json')
+        request = self.factory.post(
+            'forgot_password_complete/', data, format='json')
         view = ForgotPasswordCompleteView.as_view()
         response = view(request)
 

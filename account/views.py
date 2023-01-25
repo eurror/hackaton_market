@@ -32,8 +32,10 @@ class ActivationView(APIView):
 class LoginView(ObtainAuthToken):
     serializer_class = LoginSerializer
 
+
 class LogoutView(APIView):
     permission_classes = [IsActivePermission]
+
     def post(self, request):
         user = request.user
         Token.objects.filter(user=user).delete()
@@ -45,7 +47,8 @@ class ChangePasswordView(APIView):
 
     @swagger_auto_schema(request_body=ChangePasswordSerializer())
     def post(self, request):
-        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        serializer = ChangePasswordSerializer(
+            data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
             serializer.set_new_password()
             return Response('Status: 200. пароль успешно обновлен')
@@ -54,7 +57,7 @@ class ChangePasswordView(APIView):
 class ForgotPasswordView(APIView):
     @swagger_auto_schema(request_body=ForgotPasswordSerializer())
     def post(self, request):
-        serializer = ForgotPasswordSerializer(data = request.data)
+        serializer = ForgotPasswordSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.send_verification_email()
             return Response('Вам выслали сообщение для восстановления')

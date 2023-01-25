@@ -16,7 +16,8 @@ class RegistrationSerializer(serializers.Serializer):
 
     def validate_email(self, email):
         if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError('Пользователь с таким email уже существует')
+            raise serializers.ValidationError(
+                'Пользователь с таким email уже существует')
         return email
 
     def validate(self, attr):
@@ -66,11 +67,13 @@ class LoginSerializer(serializers.Serializer):
         email = data.get('email')
         password = data.get('password')
         if email and password:
-            user = authenticate(username=email, password=password, request=request)
+            user = authenticate(
+                username=email, password=password, request=request)
             if not user:
                 raise serializers.ValidationError('Не верный email или пароль')
         else:
-            raise serializers.ValidationError('Email и пароль обязательны к заполнению')
+            raise serializers.ValidationError(
+                'Email и пароль обязательны к заполнению')
         data['user'] = user
         return data
 
@@ -140,8 +143,9 @@ class ForgotPasswordCompleteSerializer(serializers.Serializer):
         password2 = attrs.get('password_confirm')
 
         if not User.objects.filter(email=email,
-                activation_code=code).exists():
-            raise serializers.ValidationError('Пользователь не найден или неправильный код')
+                                   activation_code=code).exists():
+            raise serializers.ValidationError(
+                'Пользователь не найден или неправильный код')
 
         if password1 != password2:
             raise serializers.ValidationError('Пароли не совпадают')
