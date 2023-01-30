@@ -91,3 +91,4 @@ class FavouritesViewSet(ModelViewSet):
             serializer = FavouritesSerializer(product, many=True)
             return Response(serializer.data)
         Response.redirect('account:login')
+

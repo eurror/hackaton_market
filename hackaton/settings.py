@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'main',
     'account',
     'cart',
+    'payment',
 ]
 # it's recommended to use json format if you're using postgresql to let your users to login via google etc.
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
